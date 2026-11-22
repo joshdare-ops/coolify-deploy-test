@@ -3,7 +3,7 @@
 import os
 from http.server import BaseHTTPRequestHandler, ThreadingHTTPServer
 
-VERSION = "1"
+VERSION = "2"
 
 
 class Handler(BaseHTTPRequestHandler):
