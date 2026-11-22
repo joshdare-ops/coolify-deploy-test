@@ -22,13 +22,13 @@ PORT=9090 python -u server.py
 With Docker:
 
 ```sh
-docker build -t coolify-deploy-test:v1 .
-docker run --rm -p 8080:8080 coolify-deploy-test:v1
+docker build -t coolify-deploy-test:v2 .
+docker run --rm -p 8080:8080 coolify-deploy-test:v2
 ```
 
 ## Endpoints
 
-- `GET /` (or `/index.html`): HTTP 200 with `VERSION=1`.
+- `GET /` (or `/index.html`): HTTP 200 with `VERSION=2`.
 - `GET /health` (or `/health/`): HTTP 200 with `ok`.
 - Other paths: HTTP 404.
 
@@ -38,7 +38,7 @@ docker run --rm -p 8080:8080 coolify-deploy-test:v1
 python -m unittest discover -s tests -v
 ```
 
-These tests are the cheap check for version 1. They do not deploy anything.
+These tests are the cheap check for version 2. They do not deploy anything.
 
 ## How Coolify deploys it
 
@@ -47,9 +47,8 @@ from the public GitHub repository `joshdare-ops/coolify-deploy-test`. Use the
 Dockerfile build pack and publish port 8080. No domain, volumes, or environment
 variables are required. Deploy a commit from `main` after it is merged.
 
-To test rollback later, a separate version 2 PR will change the served string to
-`VERSION=2`. Deploy that, then use Coolify's rollback to this version 1
-commit/image. The page should serve `VERSION=1` again.
+To test rollback, deploy this version to serve `VERSION=2`, then use Coolify's
+rollback to the version 1 commit/image. The page should serve `VERSION=1` again.
 
 Coolify rollback redeploys an already-built image for an earlier commit. It does
 not undo environment variable, volume, or configuration changes.

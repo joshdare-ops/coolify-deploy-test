@@ -38,7 +38,7 @@ class ServerTests(unittest.TestCase):
     def test_root(self):
         status, body = self.get("/")
         self.assertEqual(status, 200)
-        self.assertIn("VERSION=1", body)
+        self.assertIn("VERSION=2", body)
 
     def test_health(self):
         for path in ("/health", "/health/"):
